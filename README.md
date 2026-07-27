@@ -70,32 +70,43 @@ Now, Queue becomes empty, So, terminate these process of iteration.
 <h3>PROGRAM</h3>
 
 ```
-from collections import deque
-from collections import defaultdict 
-def bfs(graph,start,visited,path):
-  queue = deque()
-  path.append(start)
-  queue.append(start)
-  visited[start] = True
-  while len(queue) != 0:
-    tmpnode = queue.popleft()
-    for neighbour in graph[tmpnode]:
-      if visited[neighbour] == False:
-        path.append(neighbour)
-        queue.append(neighbour)
-        visited[neighbour] = True
-  return path 
+from collections import deque, defaultdict
+
+def bfs(graph, start):
+    visited = defaultdict(bool)
+    path = []
+    queue = deque()
+
+    visited[start] = True
+    queue.append(start)
+
+    while queue:
+        node = queue.popleft()
+        path.append(node)
+
+        for neighbour in graph[node]:
+            if not visited[neighbour]:
+                visited[neighbour] = True
+                queue.append(neighbour)
+
+    return path
+
 graph = defaultdict(list)
-v,e = map(int,input().split()) 
+
+n, e = map(int, input().split())
+
+start = None
+
 for i in range(e):
-  u,v = map(str,input().split())   
-  graph[u].append(v)
-  graph[v].append(u)
-start = 'A'
-path = []
-visited = defaultdict(bool)
-traversedpath = bfs(graph,start,visited,path)
-print(traversedpath)
+    u, v = input().split()
+
+    if start is None:
+        start = u
+
+    graph[u].append(v)
+    graph[v].append(u)
+
+print(bfs(graph, start))
 ```
 <hr>
 <h3>Sample Input</h3>
@@ -135,7 +146,8 @@ G F <BR>
 <h3>OUTPUT</h3>
 <img width="471" height="220" alt="image" src="https://github.com/user-attachments/assets/73b7798f-f72a-4759-9a4f-bfb3e379ce15" />
 
-<img width="442" height="167" alt="image" src="https://github.com/user-attachments/assets/0bb1fd9f-7e70-458b-bed9-acac19f5e825" />
+<img width="480" height="170" alt="image" src="https://github.com/user-attachments/assets/cb788753-706e-46c4-8e3b-f7be801719bf" />
+
 
 
 <h3>Result:</h3>
